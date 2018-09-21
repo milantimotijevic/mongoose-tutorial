@@ -9,4 +9,16 @@ router.get('/test-cat', function(req, res) {
     });
 });
 
+router.get('/cat', function(req, res) {
+    catRepo.fetchAllCats(function(result) {
+        res.send(result);
+    });
+});
+
+router.get('/cat/:id', function(req, res) {
+    catRepo.fetchCat(req.params.id, function(result) {
+        res.send(result);
+    });
+});
+
 module.exports = router;

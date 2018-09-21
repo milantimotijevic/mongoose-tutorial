@@ -14,4 +14,16 @@ methods.saveCoolestCatInTheWorld = function(callback) {
     });
 };
 
+methods.fetchCat = function(id, callback) {
+    Cat.find({_id: id}, function(err, result) {
+        callback(result);
+    });
+};
+
+methods.fetchAllCats = function(callback) {
+    Cat.find({}, function(err, result) {
+        callback(result);
+    });
+};
+
 module.exports = methods;
