@@ -21,4 +21,10 @@ router.get('/cat/:id', function(req, res) {
     });
 });
 
+router.post('/cat', function(req, res) {
+    catRepo.saveCat(req.body, function(result) {
+        res.send(result);
+    });
+});
+
 module.exports = router;

@@ -26,4 +26,11 @@ methods.fetchAllCats = function(callback) {
     });
 };
 
+methods.saveCat = function(cat, callback) {
+    const catForSaving = new Cat(cat);
+    catForSaving.save(function(err, result) {
+        callback(result);
+    });
+};
+
 module.exports = methods;
