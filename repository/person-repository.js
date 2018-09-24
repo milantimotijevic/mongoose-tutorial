@@ -28,11 +28,13 @@ const addressSchema = new Schema({
 //     this.populate('resident');
 // });
 
+
+// NOTE: one-to-one-relation
 // NOTE: this is an example where two schemas reference one another
 
 const Address = mongoose.model('Address', addressSchema, 'addresses');
 const Person = mongoose.model('Person', personSchema, 'persons');
-// TODO etract models into separate files
+// TODO extract models into separate files
 
 const methods = {};
 
