@@ -3,16 +3,15 @@ const schema = new mongoose.Schema({
     name: 'String',
     color: 'String'
 });
+
+// apparently these methods can only be called when saving an entry, NOT when fetching it
+schema.methods.introduce = function() {
+    const intro = 'I am ' + this.name + ' and my color is ' + this.color;
+    console.log(intro);
+};
 const Cat = mongoose.model('Cat', schema);
 
-const methods = {};
-
-methods.saveCoolestCatInTheWorld = function(callback) {
-    const cat1 = new Cat({name: "Maji Beji", color: "white"});
-    cat1.save(function(err, result) {
-        callback(result);
-    });
-};
+const methods = {}; //used with module.export (for convenience)
 
 methods.fetchCat = function(id, callback) {
     Cat.find({_id: id}, function(err, result) {
@@ -29,6 +28,7 @@ methods.fetchAllCats = function(callback) {
 methods.saveCat = function(cat, callback) {
     const catForSaving = new Cat(cat);
     catForSaving.save(function(err, result) {
+        result.introduce(); // this method was saved in the schema earlier
         callback(result);
     });
 };
