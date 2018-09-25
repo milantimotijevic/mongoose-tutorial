@@ -74,7 +74,8 @@ methods.fetchAllWizards = function(callback) {
 // NOTE: mongoose.Types.ObjectId.isValid() should be used to validate object IDs before using them in queries; mis-formed ObjectIds cause an exception to be thrown
 methods.fetchWizardsBySpell = function(spellId, callback) {
     if(!mongoose.Types.ObjectId.isValid(spellId)) throw spellId + ' has incorrect ObjectId format'; // TODO handle this better
-    Wizard.find().where("spells").in(spellId).exec(function(err, result) { // apparently $in works when checking whether an array property contains a specific value and not just whether a non-array property matches one of the values from passed array
+    // below .select('-spells') part is a different way of writing projection; in this particular case I want to exclude the 'spells' property from each wizard when fetching it
+    Wizard.find().where("spells").in(spellId).select('-spells').exec(function(err, result) { // apparently $in works when checking whether an array property contains a specific value and not just whether a non-array property matches one of the values from passed array
         if(err) throw err;
         callback(result);
     });
