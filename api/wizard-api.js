@@ -40,4 +40,54 @@ router.post('/wizard', function(req, res) {
     }
 });
 
+router.put('/wizard', function(req, res) {
+    try {
+        wizardRepo.updateWizard(req.body, function(result) {
+            res.send(result);
+        });
+    } catch(err) {
+        res.status(400).json({msg: 'Something bad happened...'});
+    }
+});
+
+router.get('/spell', function(req, res) {
+    try {
+        wizardRepo.fetchAllSpells(function(result) {
+            res.send(result);
+        });
+    } catch(err) {
+        res.status(400).json({msg: 'Something bad happened...'});
+    }
+});
+
+router.get('/spell/:id', function(req, res) {
+    try {
+        wizardRepo.fetchSpell(req.params.id, function(result) {
+            res.send(result);
+        });
+    } catch(err) {
+        res.status(400).json({msg: 'Something bad happened...'});
+    }
+});
+
+router.post('/spell', function(req, res) {
+    try {
+        wizardRepo.saveSpell(req.body, function(result) {
+            res.send(result);
+        });
+    } catch(err) {
+        res.status(400).json({msg: 'Something bad happened...'});
+    }
+});
+
+router.put('/spell', function(req, res) {
+    try {
+        wizardRepo.updateSpell(req.body, function(result) {
+            res.send(result);
+        });
+    } catch(err) {
+        res.status(400).json({msg: 'Something bad happened...'});
+    }
+});
+
 module.exports = router;
