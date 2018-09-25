@@ -20,6 +20,16 @@ router.get('/wizard', function(req, res) {
     }
 });
 
+router.get('/wizards-by-spell/:spellId', function(req, res) {
+    try {
+        wizardRepo.fetchWizardsBySpell(req.params.spellId, function(result) {
+            res.send(result);
+        });
+    } catch(err) {
+        res.status(400).json({msg: 'Something bad happened...'});
+    }
+});
+
 router.get('/wizard/:id', function(req, res) {
     try {
         wizardRepo.fetchWizard(req.params.id, function(result) {
