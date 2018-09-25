@@ -19,7 +19,7 @@ const spellSchema = new Schema({
 const Spell = mongoose.model('Spell', spellSchema);
 const Wizard = mongoose.model('Wizard', wizardSchema);
 
-// simulating cascade updating using hooks
+// simulating cascade updating using hooks (not a realistic scenario)
 Wizard.schema.post('save', function(wizard) {
     const spellIds = wizard.spells;
     if(!Array.isArray(spellIds) || spellIds.length < 1) return;
@@ -63,7 +63,9 @@ methods.fetchAllWizards = function(callback) {
     //     if(err) throw err;
     //     callback(result);
     // });
-    Wizard.find().populate('spells').exec(function(err, result) {
+
+    // second arg in populate refers to projection (which fields to include/exclude)
+    Wizard.find().populate('spells', {name: 1, _id: 0}).exec(function(err, result) {
         if(err) throw err;
         callback(result);
     });
