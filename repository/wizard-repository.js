@@ -22,9 +22,18 @@ const Wizard = mongoose.model('Wizard', wizardSchema);
 // simulating cascade updating using hooks
 Wizard.schema.post('save', function(wizard) {
     const spellIds = wizard.spells;
-    if(!Array.isArray(spellIds) && spellIds.length < 1) return;
+    if(!Array.isArray(spellIds) || spellIds.length < 1) return;
     // NOTE: use $push on array properties (don't have to overwrite them); also, 'where' can be called directly off of the model as shown below
-    Spell.where('_id').in(spellIds).update({$push: {'wizards': wizard._id}}, function(err, result) {}); // this callback is needed even if empty (update does not get triggered otherwise)
+    Spell.where('_id').in(spellIds).updateMany({$push: {'wizards': wizard._id}}, function(err, result) {}); // this callback is needed even if empty (update does not get triggered otherwise)
+    // TODO experiment with different syntax for above query (update)
+
+});
+
+Spell.schema.post('save', function(spell) {
+    const wizardIds = spell.wizards;
+    if(!Array.isArray(wizardIds) || wizardIds.length < 1) return;
+    // NOTE: use $push on array properties (don't have to overwrite them); also, 'where' can be called directly off of the model as shown below
+    Wizard.where('_id').in(wizardIds).updateMany({$push: {'spells': spell._id}}, function(err, result) {}); // this callback is needed even if empty (update does not get triggered otherwise)
 
 });
 
