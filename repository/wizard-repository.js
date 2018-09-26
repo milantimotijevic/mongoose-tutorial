@@ -1,10 +1,22 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const wizardSchemaOptions = { // not mandatory; can specify whether I want virtuals (e.g. 'title') to be included by default
+    toJSON: {
+        virtuals: true
+    },
+    toObject: {
+        virtuals: true
+    } // apparently toJSON and toObject are pretty much the same
+};
 const wizardSchema = new Schema({
     name: 'String',
     alignment: 'String',
     race: 'String',
     spells: [{type: Schema.Types.ObjectId, ref: 'Spell'}]
+}, wizardSchemaOptions);
+
+wizardSchema.virtual('title').get(function() { // virtual props don't get persisted, but can be used throughout the application all the same
+    return this.name + ' the ' + this.alignment;
 });
 
 const spellSchema = new Schema({
@@ -40,7 +52,9 @@ Spell.schema.post('save', function(spell) {
 const methods = {};
 
 methods.wizardTest = function(callback) {
-
+    Wizard.findOne({}, function(err, result) {
+        callback(result.title);
+    });
 };
 
 methods.customQuery = function(callback) {
