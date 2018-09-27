@@ -15,7 +15,7 @@ router.post('/register', function(req, res) {
     });
 });
 
-router.post('/login', function(req, res) {
+router.post('/login', function(req, res, next) {
     const user = req.body.user;
 
     if(!user.email || !user.password) {

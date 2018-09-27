@@ -9,8 +9,8 @@ passport.use(new LocalStrategy({
 }, function(email, password, done) {
         User.findOne({email}).then(function(user) {
             if(!user || !user.validatePassword(password)) {
-                return done(user, false, {errors: "missing email or pw"});
+                return done(null, false, {errors: "missing email or pw"});
             }
-            return done(user, null);
+            return done(null, user);
         }).catch(done);
 }));
