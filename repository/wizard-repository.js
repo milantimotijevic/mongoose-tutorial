@@ -26,8 +26,7 @@ wizardSchema.virtual('title').get(function() { // virtual props don't get persis
 //     this.name.first = v.substr(0, v.indexOf(' '));
 //     this.name.last = v.substr(v.indexOf(' ') + 1);
 // });
-
-axl.fullName = 'William Rose'; // Now `axl.name.first` is "William"
+//axl.fullName = 'William Rose'; // Now `axl.name.first` is "William"
 
 const spellSchema = new Schema({
     name: 'String',
