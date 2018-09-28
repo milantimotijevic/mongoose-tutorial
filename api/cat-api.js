@@ -14,7 +14,7 @@ router.get('/cat', auth.required, function(req, res) {
     });
 });
 
-router.get('/cat/:id', function(req, res) {
+router.get('/cat/:id', auth.required, function(req, res) {
     catRepo.fetchCat(req.params.id, function(result) {
         res.send(result);
     });
