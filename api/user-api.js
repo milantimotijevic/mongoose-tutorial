@@ -23,7 +23,7 @@ router.post('/login', function(req, res, next) {
     }
 
     return passport.authenticate('local', {session: false}, function(err, passportUser, info) {
-        if(err) throw err;
+        if(err) next(err); // pass error to common error handler
 
         if(passportUser) {
             const currentUser = passportUser;
