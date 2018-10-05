@@ -39,6 +39,12 @@ const spellSchema = new Schema({
 // NOTE: this is an example where two schemas reference one another
 const Spell = mongoose.model('Spell', spellSchema);
 const Wizard = mongoose.model('Wizard', wizardSchema);
+/*
+NOTE: it is possible to append additional properties to a schema that has already been consumed into a model, HOWEVER,
+doing so will cause resulting objects (from fetches) to NOT implicitly call toJSON(),
+meaning that some properties will not be available right off the bat (i.e. result.token);
+instead, you'll need to call .toJSON() manually
+*/
 
 // simulating cascade updating using hooks (not a realistic scenario)
 Wizard.schema.post('save', function(wizard) {
